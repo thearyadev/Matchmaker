@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from uuid import UUID
 import nextcord
 from util.models.game import Game
+from util.models.player import Player
 
 
 @dataclass
@@ -11,7 +12,7 @@ class Lobby:
 
     owner: nextcord.User
 
-    players: set[nextcord.User]
+    players: set[Player]
     guild: nextcord.Guild
     game: Game
 
@@ -56,10 +57,10 @@ class Lobby:
 
         if self.join_text is None:
             self.join_text = await self.category.create_text_channel("join")
-        
+
         if self.match_text is None:
             self.match_text = await self.category.create_text_channel("match")
-        
+
         if self.tools_text is None:
             self.tools_text = await self.category.create_text_channel("tools")
 
