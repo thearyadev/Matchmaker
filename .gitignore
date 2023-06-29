@@ -2,3 +2,4 @@
 .vscode
 /__pycache__
 *.pyc
+modals/__pycache__/player_start_modal.cpython-311.pyc
