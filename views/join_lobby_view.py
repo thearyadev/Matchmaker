@@ -1,7 +1,8 @@
 import nextcord
+
+from modals.player_start_modal import PlayerStartModal
 from util.models.lobby import Lobby
 from util.models.player import Player
-from modals.player_start_modal import PlayerStartModal
 
 
 class JoinLobbyView(nextcord.ui.View):

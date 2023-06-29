@@ -1,11 +1,15 @@
-from typing import TypeVar, Type, Optional
+from typing import Optional, Type, TypeVar
+
 from fuzzywuzzy import fuzz
+
 from util.models.alias_enum import AliasEnum
 
 T = TypeVar("T", bound="Rank")
 
+
 class Rank(AliasEnum):
     ...
+
 
 class OverwatchRank(Rank):
     BRONZE_5 = 1, ["b5"]
@@ -43,6 +47,7 @@ class OverwatchRank(Rank):
     GRANDMASTER_3 = 33, ["gm3"]
     GRANDMASTER_2 = 34, ["gm2"]
     GRANDMASTER_1 = 35, ["gm1"]
+
 
 if __name__ == "__main__":
     print(OverwatchRank.fuzz_from_string("gm3"))

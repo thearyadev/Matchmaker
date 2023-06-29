@@ -1,7 +1,9 @@
-import nextcord
 from dataclasses import dataclass
-from util.models.role import Role
+
+import nextcord
+
 from util.models.rank import OverwatchRank
+from util.models.role import Role
 
 
 @dataclass

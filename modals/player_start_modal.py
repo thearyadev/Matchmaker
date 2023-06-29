@@ -1,4 +1,5 @@
 import nextcord
+
 from util.models.rank import OverwatchRank
 from util.models.role import Role
 

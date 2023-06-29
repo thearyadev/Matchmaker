@@ -1,5 +1,6 @@
 from util.models.role import Role
 
+
 def test_fuzz_from_string():
     assert Role.fuzz_from_string("DPS") == Role.DAMAGE
     assert Role.fuzz_from_string("DAMAGE") == Role.DAMAGE
