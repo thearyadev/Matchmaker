@@ -1,5 +1,6 @@
 import nextcord
 
+
 class PlayerStartModal(nextcord.ui.Modal):
     def __init__(self):
         super().__init__(
@@ -7,7 +8,6 @@ class PlayerStartModal(nextcord.ui.Modal):
             timeout=5 * 60,  # 5 minutes
         )
 
-        
         self.tank = nextcord.ui.TextInput(
             placeholder="Enter your favourite pet's name...",
             min_length=3,
@@ -16,8 +16,8 @@ class PlayerStartModal(nextcord.ui.Modal):
         )
         self.add_item(self.tank)
 
-        
-
     async def callback(self, interaction: nextcord.Interaction) -> None:
-        response = f"{interaction.user.mention}'s favourite pet's name is {self.tank.value}."
+        response = (
+            f"{interaction.user.mention}'s favourite pet's name is {self.tank.value}."
+        )
         await interaction.send(response)
