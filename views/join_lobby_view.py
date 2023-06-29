@@ -1,5 +1,7 @@
 import nextcord
 from util.models.lobby import Lobby
+from util.models.player import Player
+from modals.player_start_modal import PlayerStartModal
 
 
 class JoinLobbyView(nextcord.ui.View):
@@ -11,10 +13,29 @@ class JoinLobbyView(nextcord.ui.View):
     async def join_lobby_button_handler(
         self, button: nextcord.ui.Button, interaction: nextcord.Interaction
     ):
-        self.lobby.players.add(interaction.user)
-        await self.lobby.update_player_count()
-        await interaction.response.send_message(
-            f"You've joined the lobby! Join {self.lobby.lobby_voice.mention} to get started.",
+        modal = PlayerStartModal()
+        await interaction.response.send_modal(modal=modal)
+        await modal.wait()
+
+        new_player = Player(
+            user=interaction.user,
+            role=modal.role,
+            rank=modal.rank,
+            total_games=0,
+        )
+
+        if new_player.rank is not None and new_player.role is not None:
+            self.lobby.players.add(new_player)
+            await self.lobby.update_player_count()
+            await interaction.send(
+                f"You've joined the lobby! Join {self.lobby.lobby_voice.mention} to get started.\n"
+                f"Player Details: ```Name:{new_player.user.display_name}\nRank:{new_player.rank}\nRole:{new_player.role}```"
+                "If something is wrong, click 'Join' again.",
+                ephemeral=True,
+            )
+            return
+        await interaction.followup.send(
+            "Hmm. Something went wrong. Make sure you entered your rank and role correctly.",
             ephemeral=True,
         )
 
