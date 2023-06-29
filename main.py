@@ -29,6 +29,18 @@ class Matchmaker(commands.Cog):
         await interaction.response.send_message("Joining lobby...")
 
     @nextcord.slash_command(
+        name="purge",
+        description="Purge all lobbies",
+        guild_ids=[TESTING_GUILD_ID],
+    )
+    async def purge(self, interaction: nextcord.Interaction):
+        for channel in interaction.guild.channels:
+            try:
+                await channel.delete()
+            except:
+                pass
+
+    @nextcord.slash_command(
         name="createlobby",
         description="Create a new lobby",
         guild_ids=[TESTING_GUILD_ID],
