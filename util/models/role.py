@@ -1,7 +1,13 @@
-from enum import Enum
+from typing import Optional, TypeVar, Type
+from fuzzywuzzy import fuzz
+from util.models.alias_enum import AliasEnum
 
+T = TypeVar("T", bound="Role")
 
-class Role(Enum):
-    DAMAGE = 1
-    TANK = 2
-    SUPPORT = 3
+class Role(AliasEnum):
+    aliases: list[str]
+    DAMAGE = 1, ["dps", "offense"]
+    TANK = 2, ["main tank", "off tank"]
+    SUPPORT = 3, ["healer", "main support", "flex support", "fs", "ms"]
+
+    
