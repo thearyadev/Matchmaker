@@ -4,12 +4,13 @@ import nextcord
 
 from util.models.rank import OverwatchRank
 from util.models.role import Role
+from typing import Optional
 
 
 @dataclass
 class Player:
     user: nextcord.User
-    role: Role
+    role: Optional[Role]
     total_games: int
     rank: OverwatchRank
 
