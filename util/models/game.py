@@ -1,6 +1,7 @@
 from enum import Enum
+from util.models.alias_enum import AliasEnum
 
 
-class Game(Enum):
-    OVERWATCH = 1
-    VALORANT = 2
+class Game(AliasEnum):
+    OVERWATCH = 1, ["ow", "over watch"]
+    VALORANT = 2, ["val", "valor"]

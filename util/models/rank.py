@@ -47,7 +47,3 @@ class OverwatchRank(Rank):
     GRANDMASTER_3 = 33, ["gm3"]
     GRANDMASTER_2 = 34, ["gm2"]
     GRANDMASTER_1 = 35, ["gm1"]
-
-
-if __name__ == "__main__":
-    print(OverwatchRank.fuzz_from_string("gm3"))
