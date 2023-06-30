@@ -33,5 +33,6 @@ class AliasEnum(Enum):
         return max(results, key=lambda value_pair: value_pair[-1])[0]
 
     @staticmethod
+    @cache
     def standardize(string: str) -> str:
         return string.upper().strip().replace(" ", "_")
