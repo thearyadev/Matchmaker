@@ -14,31 +14,37 @@ from util.models.rank import OverwatchRank
 from util.models.role import Role
 
 def test_initialization():
-    team = Team("team_name")
+    team = Team(name="team_name")
     assert team.name == "team_name"
     assert isinstance(team.players, set)
     assert isinstance(team, set)
 
 def test_add_player():
-    team = Team("team_name")
-    player = Player(name="player", role=Role.TANK, rank=OverwatchRank.GRANDMASTER_1, total_games=12)
-    team.add_player(player)
+    team = Team(name="team_name")
+    player = Player(user="player", role=Role.TANK, rank=OverwatchRank.GRANDMASTER_1, total_games=12)
+    team.add(player)
     assert player in team.players
 
 def test_remove():
-    team = Team("team_name")
-    player = Player(name="player", role=Role.TANK, rank=OverwatchRank.GRANDMASTER_1, total_games=12)
-    team.add_player(player)
+    team = Team(name="team_name")
+    player = Player(user="player", role=Role.TANK, rank=OverwatchRank.GRANDMASTER_1, total_games=12)
+    team.add(player)
     assert player in team.players
     team.remove(player)
     assert player not in team.players
 
 def test_iterable():
-    team = Team("team_name")
-    player = Player(name="player", role=Role.TANK, rank=OverwatchRank.GRANDMASTER_1, total_games=12)
-    team.add_player(player)
+    team = Team(name="team_name")
+    player = Player(user="player", role=Role.TANK, rank=OverwatchRank.GRANDMASTER_1, total_games=12)
+    team.add(player)
     for player in team:
         assert player in team.players
+
+def test_len():
+    team = Team(name="team_name")
+    player = Player(user="player", role=Role.TANK, rank=OverwatchRank.GRANDMASTER_1, total_games=12)
+    team.add(player)
+    assert len(team) == 1
     
 def test_shuffle():
     """to be implemented"""
