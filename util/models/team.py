@@ -43,6 +43,7 @@ def mean_delta(team_1: Team, team_2: Team) -> float:
     return abs(team_1.rank_mean() - team_2.rank_mean())
 
 def shuffle(team1: Team, team2: Team):
+    """Swaps one player from team1 with one player from team2 with the same role."""
     player1: Player = random.choice(team1)
     team1.remove(player1)
     for p in team2:
