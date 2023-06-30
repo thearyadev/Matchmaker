@@ -20,3 +20,6 @@ class Player:
         if isinstance(other, Player):
             return self.user == other.user
         return False
+
+    def rank_value(self) -> int:
+        return self.rank.value
