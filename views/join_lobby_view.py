@@ -1,8 +1,12 @@
 import nextcord
 
-from modals.player_start_modal import PlayerStartModal
+from modals.player_start_modal import (
+    OverwatchPlayerStartModal,
+    ValorantPlayerStartModal,
+)
 from util.models.lobby import Lobby
 from util.models.player import Player
+from util.models.game import Game
 
 
 class JoinLobbyView(nextcord.ui.View):
@@ -14,31 +18,60 @@ class JoinLobbyView(nextcord.ui.View):
     async def join_lobby_button_handler(
         self, button: nextcord.ui.Button, interaction: nextcord.Interaction
     ):
-        modal = PlayerStartModal()
-        await interaction.response.send_modal(modal=modal)
-        await modal.wait()
+        if self.lobby.game == Game.OVERWATCH:
+            modal = OverwatchPlayerStartModal()
+            await interaction.response.send_modal(modal=modal)
+            await modal.wait()
 
-        new_player = Player(
-            user=interaction.user,
-            role=modal.role,
-            rank=modal.rank,
-            total_games=0,
-        )
+            new_player = Player(
+                user=interaction.user,
+                role=modal.role,
+                rank=modal.rank,
+                total_games=0,
+            )
 
-        if new_player.rank is not None and new_player.role is not None:
-            self.lobby.players.add(new_player)
-            await self.lobby.update_player_count()
-            await interaction.send(
-                f"You've joined the lobby! Join {self.lobby.lobby_voice.mention} to get started.\n"
-                f"Player Details: ```Name:{new_player.user.display_name}\nRank:{new_player.rank}\nRole:{new_player.role}```"
-                "If something is wrong, click 'Join' again.",
+            if new_player.rank is not None and new_player.role is not None:
+                self.lobby.players.add(new_player)
+                await self.lobby.update_player_count()
+                await interaction.send(
+                    f"You've joined the lobby! Join {self.lobby.lobby_voice.mention} to get started.\n"
+                    f"Player Details: ```Name:{new_player.user.display_name}\nRank:{new_player.rank}\nRole:{new_player.role}```"
+                    "If something is wrong, click 'Join' again.",
+                    ephemeral=True,
+                )
+                return
+
+            await interaction.followup.send(
+                "Hmm. Something went wrong. Make sure you entered your rank and role correctly.",
                 ephemeral=True,
             )
             return
-        await interaction.followup.send(
-            "Hmm. Something went wrong. Make sure you entered your rank and role correctly.",
-            ephemeral=True,
-        )
+        if self.lobby.game == Game.VALORANT:
+            modal = ValorantPlayerStartModal()
+            await interaction.response.send_modal(modal=modal)
+            await modal.wait()
+
+            new_player = Player(
+                user=interaction.user,
+                role=None,
+                rank=modal.rank,
+                total_games=0,
+            )
+
+            if new_player.rank is not None:
+                self.lobby.players.add(new_player)
+                await self.lobby.update_player_count()
+                await interaction.send(
+                    f"You've joined the lobby! Join {self.lobby.lobby_voice.mention} to get started.\n"
+                    f"Player Details: ```Name:{new_player.user.display_name}\nRank:{new_player.rank}```"
+                    "If something is wrong, click 'Join' again.",
+                    ephemeral=True,
+                )
+                return
+            await interaction.followup.send(
+                "Hmm. Something went wrong. Make sure you entered your rank and role correctly.",
+                ephemeral=True,
+            )
 
     @nextcord.ui.button(label="Close Lobby", style=nextcord.ButtonStyle.red)
     async def delete_lobby_button_handler(

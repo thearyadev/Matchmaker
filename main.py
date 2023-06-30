@@ -7,9 +7,10 @@ from nextcord.ext import commands
 from rich import print
 
 from modals.create_lobby_modal import CreateLobbyModal
-from modals.player_start_modal import PlayerStartModal
+from modals.player_start_modal import OverwatchPlayerStartModal
 from util.models.lobby import Lobby
 from views.join_lobby_view import JoinLobbyView
+from util.models.team import Team
 
 load_dotenv()
 TESTING_GUILD_ID = 1042253802507616337  # Replace with your guild ID
@@ -59,6 +60,8 @@ class Matchmaker(commands.Cog):
                 guild=interaction.guild,
                 game=createLobbyModal.game,
                 owner=interaction.user,
+                team_one=Team(name="Team 1"),
+                team_two=Team(name="Team 2"),
             )
             await lobby.create_channels()
 
