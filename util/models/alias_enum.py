@@ -3,6 +3,7 @@ from typing import Optional, Type, TypeVar
 
 from fuzzywuzzy import fuzz
 from functools import cache
+from util.standardize import standardize
 
 T = TypeVar("T", bound="AliasEnum")
 
@@ -24,15 +25,11 @@ class AliasEnum(Enum):
             for member_aliases in (member.name, *member.aliases):
                 if (
                     (score := fuzz.ratio(
-                        cls.standardize(member_aliases), cls.standardize(string)
+                        standardize(member_aliases), standardize(string)
                     ))
                     >= 95
                 ):
                     return member
                 results.append((member, score))
         return max(results, key=lambda value_pair: value_pair[-1])[0]
-
-    @staticmethod
-    @cache
-    def standardize(string: str) -> str:
-        return string.upper().strip().replace(" ", "_")
+ 
