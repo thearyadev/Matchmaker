@@ -4,9 +4,9 @@ from modals.player_start_modal import (
     OverwatchPlayerStartModal,
     ValorantPlayerStartModal,
 )
+from util.models.game import Game
 from util.models.lobby import Lobby
 from util.models.player import Player
-from util.models.game import Game
 
 
 class JoinLobbyView(nextcord.ui.View):

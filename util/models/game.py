@@ -1,4 +1,5 @@
 from enum import Enum
+
 from util.models.alias_enum import AliasEnum
 
 

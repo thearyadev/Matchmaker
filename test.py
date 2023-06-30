@@ -1,9 +1,9 @@
-from util.models.rank import OverwatchRank
-from util.models.team import Team, shuffle
-from util.models.player import Player
-from util.models.role import Role
-
 import random
+
+from util.models.player import Player
+from util.models.rank import OverwatchRank
+from util.models.role import Role
+from util.models.team import Team, shuffle
 
 team1 = Team("Team 1")
 team2 = Team("Team 2")

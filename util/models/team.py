@@ -1,8 +1,7 @@
+import random
 from dataclasses import dataclass
 
 from util.models.player import Player
-
-import random
 
 
 @dataclass

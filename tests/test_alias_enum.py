@@ -9,8 +9,8 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 
 
-
 from util.models.alias_enum import AliasEnum
+
 
 def test_alias_enum_init():
     class TestEnum(AliasEnum):
@@ -24,11 +24,12 @@ def test_alias_enum_init():
     assert TestEnum.ONE.aliases == ("one", "1")
     assert TestEnum.TWO.aliases == ("two", "2")
 
+
 def test_fuzz_from_string():
     class TestEnum(AliasEnum):
         ONE = 1, ("one", "1")
         TWO = 2, ("two", "2")
-    
+
     assert TestEnum.fuzz_from_string("one") == TestEnum.ONE
     assert TestEnum.fuzz_from_string("1") == TestEnum.ONE
     assert TestEnum.fuzz_from_string("two") == TestEnum.TWO

@@ -8,10 +8,10 @@ parent_dir = os.path.dirname(current_dir)
 # Add the parent directory to sys.path
 sys.path.append(parent_dir)
 
-from util.models.team import Team, mean_delta, shuffle
 from util.models.player import Player
 from util.models.rank import OverwatchRank
 from util.models.role import Role
+from util.models.team import Team, mean_delta, shuffle
 
 
 def test_initialization():

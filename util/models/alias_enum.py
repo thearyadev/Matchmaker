@@ -1,8 +1,9 @@
 from enum import Enum
+from functools import cache
 from typing import Optional, Type, TypeVar
 
 from fuzzywuzzy import fuzz
-from functools import cache
+
 from util.standardize import standardize
 
 T = TypeVar("T", bound="AliasEnum")

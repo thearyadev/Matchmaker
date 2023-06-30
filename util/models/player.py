@@ -1,10 +1,10 @@
 from dataclasses import dataclass
+from typing import Optional
 
 import nextcord
 
 from util.models.rank import OverwatchRank
 from util.models.role import Role
-from typing import Optional
 
 
 @dataclass
