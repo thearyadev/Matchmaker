@@ -15,6 +15,7 @@ def test_fuzz_from_string_exact_match():
     assert OverwatchRank.fuzz_from_string("BRONZE_5") == OverwatchRank.BRONZE_5
     assert OverwatchRank.fuzz_from_string("SILVER_3") == OverwatchRank.SILVER_3
     assert OverwatchRank.fuzz_from_string("GM1") == OverwatchRank.GRANDMASTER_1
+    assert OverwatchRank.fuzz_from_string("TOP_500") == OverwatchRank.TOP_500
 
 
 def test_fuzz_from_string_fuzzy_match():
@@ -26,3 +27,15 @@ def test_fuzz_from_string_fuzzy_match():
         OverwatchRank.fuzz_from_string("grandmaster 1") == OverwatchRank.GRANDMASTER_1
     )
     assert OverwatchRank.fuzz_from_string("grnd mstr 1") == OverwatchRank.GRANDMASTER_1
+    assert (
+        OverwatchRank.fuzz_from_string("grand master one")
+        == OverwatchRank.GRANDMASTER_1
+    )
+    assert (
+        OverwatchRank.fuzz_from_string("gwand mastwr owne")
+        == OverwatchRank.GRANDMASTER_1
+    )
+    assert OverwatchRank.fuzz_from_string("top 500") == OverwatchRank.TOP_500
+    assert OverwatchRank.fuzz_from_string("t500") == OverwatchRank.TOP_500
+    assert OverwatchRank.fuzz_from_string("top five hundred") == OverwatchRank.TOP_500
+    assert OverwatchRank.fuzz_from_string("top five hundwed") == OverwatchRank.TOP_500
