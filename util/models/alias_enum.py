@@ -2,12 +2,13 @@ from enum import Enum
 from typing import Optional, Type, TypeVar
 
 from fuzzywuzzy import fuzz
+from functools import cache
 
 T = TypeVar("T", bound="AliasEnum")
 
 
 class AliasEnum(Enum):
-    aliases: list[str]
+    aliases: Optional[list[str]]
 
     def __new__(cls: Type[T], value: int, aliases: Optional[list[str]] = None):
         obj = object.__new__(cls)
@@ -16,30 +17,20 @@ class AliasEnum(Enum):
         return obj
 
     @classmethod
+    @cache
     def fuzz_from_string(cls: Type[T], string: str) -> Type[T]:
-        """Returns the enum member that best matches the given string."""
-        standardised_string = cls.standardize(string)  # standardize the user input
-        members = list(cls)  # get members as list
-
-        best_match = None  # best match found so far
-        best_score = 0  # score of best match found so far
-        for member in members:  # iter members
-            score = fuzz.ratio(  # fuzz on the member name
-                cls.standardize(member.name), standardised_string
-            )
-            if member.aliases:  # if the member has aliases
-                for alias in member.aliases:  # iter aliases
-                    alias_score = fuzz.ratio(
-                        cls.standardize(alias), standardised_string
-                    )
-                    if alias_score > score:  # if the score is better
-                        score = alias_score
-
-            if score > best_score:  # if the score is better
-                best_match = member
-                best_score = score
-
-        return best_match  # return the best match
+        results: list[tuple[Type[T], int]] = list()
+        for member in list(cls):
+            for member_aliases in (member.name, *member.aliases):
+                if (
+                    (score := fuzz.ratio(
+                        cls.standardize(member_aliases), cls.standardize(string)
+                    ))
+                    >= 95
+                ):
+                    return member
+                results.append((member, score))
+        return max(results, key=lambda value_pair: value_pair[-1])[0]
 
     @staticmethod
     def standardize(string: str) -> str:
