@@ -12,6 +12,13 @@ from util.models.player import Player
 from util.models.rank import OverwatchRank
 from util.models.role import Role
 
+
 def test_rank_value():
-    player = Player(name="player", role=Role.DAMAGE, rank=OverwatchRank.GRANDMASTER_1, total_games=12)
-    assert player.rank_value == OverwatchRank.GRANDMASTER_1.value
+    player = Player(
+        user="player",
+        role=Role.DAMAGE,
+        rank=OverwatchRank.GRANDMASTER_1,
+        total_games=12,
+    )
+    assert isinstance(player.rank_value(), int)
+    assert player.rank_value() == OverwatchRank.GRANDMASTER_1.value
