@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from util.models.player import Player
 
+import random
 
 @dataclass
 class Team(set):
@@ -19,6 +20,12 @@ class Team(set):
 
     def __len__(self):
         return len(self.players)
+    
+    def __getitem__(self, index):
+        return list(self.players)[index] # this is used for random.choice()
+
+    def __repr__(self):
+        return f"Team({self.name}, {self.players})"
 
     def add(self, player: Player):
         self.players.add(player)
@@ -32,6 +39,15 @@ class Team(set):
     def rank_mean(self):
         return sum([player.rank_value() for player in self.players]) / len(self.players)
 
-
 def mean_delta(team_1: Team, team_2: Team) -> float:
     return abs(team_1.rank_mean() - team_2.rank_mean())
+
+def shuffle(team1: Team, team2: Team):
+    player1: Player = random.choice(team1)
+    team1.remove(player1)
+    for p in team2:
+        if p.role == player1.role:
+            team2.remove(p)
+            team2.add(player1)
+            team1.add(p)
+            return
