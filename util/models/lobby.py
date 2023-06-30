@@ -5,6 +5,7 @@ import nextcord
 
 from util.models.game import Game
 from util.models.player import Player
+from util.models.team import Team
 
 
 @dataclass
@@ -15,6 +16,10 @@ class Lobby:
     owner: nextcord.User
 
     players: set[Player]
+
+    team_one: Team
+    team_two: Team
+
     guild: nextcord.Guild
     game: Game
 
