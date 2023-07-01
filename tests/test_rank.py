@@ -12,30 +12,26 @@ from util.models.rank import OverwatchRank
 
 
 def test_fuzz_from_string_exact_match():
-    assert OverwatchRank.fuzz_from_string("BRONZE_5") == OverwatchRank.BRONZE_5
-    assert OverwatchRank.fuzz_from_string("SILVER_3") == OverwatchRank.SILVER_3
-    assert OverwatchRank.fuzz_from_string("GM1") == OverwatchRank.GRANDMASTER_1
-    assert OverwatchRank.fuzz_from_string("TOP_500") == OverwatchRank.TOP_500
+    assert OverwatchRank.fuzz_from_str("BRONZE_5") == OverwatchRank.BRONZE_5
+    assert OverwatchRank.fuzz_from_str("SILVER_3") == OverwatchRank.SILVER_3
+    assert OverwatchRank.fuzz_from_str("GM1") == OverwatchRank.GRANDMASTER_1
+    assert OverwatchRank.fuzz_from_str("TOP_500") == OverwatchRank.TOP_500
 
 
 def test_fuzz_from_string_fuzzy_match():
-    assert OverwatchRank.fuzz_from_string("bronze 5") == OverwatchRank.BRONZE_5
-    assert OverwatchRank.fuzz_from_string("b5") == OverwatchRank.BRONZE_5
-    assert OverwatchRank.fuzz_from_string("silver 3") == OverwatchRank.SILVER_3
-    assert OverwatchRank.fuzz_from_string("s3") == OverwatchRank.SILVER_3
+    assert OverwatchRank.fuzz_from_str("bronze 5") == OverwatchRank.BRONZE_5
+    assert OverwatchRank.fuzz_from_str("b5") == OverwatchRank.BRONZE_5
+    assert OverwatchRank.fuzz_from_str("silver 3") == OverwatchRank.SILVER_3
+    assert OverwatchRank.fuzz_from_str("s3") == OverwatchRank.SILVER_3
+    assert OverwatchRank.fuzz_from_str("grandmaster 1") == OverwatchRank.GRANDMASTER_1
+    assert OverwatchRank.fuzz_from_str("grnd mstr 1") == OverwatchRank.GRANDMASTER_1
     assert (
-        OverwatchRank.fuzz_from_string("grandmaster 1") == OverwatchRank.GRANDMASTER_1
-    )
-    assert OverwatchRank.fuzz_from_string("grnd mstr 1") == OverwatchRank.GRANDMASTER_1
-    assert (
-        OverwatchRank.fuzz_from_string("grand master one")
-        == OverwatchRank.GRANDMASTER_1
+        OverwatchRank.fuzz_from_str("grand master one") == OverwatchRank.GRANDMASTER_1
     )
     assert (
-        OverwatchRank.fuzz_from_string("gwand mastwr owne")
-        == OverwatchRank.GRANDMASTER_1
+        OverwatchRank.fuzz_from_str("gwand mastwr owne") == OverwatchRank.GRANDMASTER_1
     )
-    assert OverwatchRank.fuzz_from_string("top 500") == OverwatchRank.TOP_500
-    assert OverwatchRank.fuzz_from_string("t500") == OverwatchRank.TOP_500
-    assert OverwatchRank.fuzz_from_string("top five hundred") == OverwatchRank.TOP_500
-    assert OverwatchRank.fuzz_from_string("top five hundwed") == OverwatchRank.TOP_500
+    assert OverwatchRank.fuzz_from_str("top 500") == OverwatchRank.TOP_500
+    assert OverwatchRank.fuzz_from_str("t500") == OverwatchRank.TOP_500
+    assert OverwatchRank.fuzz_from_str("top five hundred") == OverwatchRank.TOP_500
+    assert OverwatchRank.fuzz_from_str("top five hundwed") == OverwatchRank.TOP_500

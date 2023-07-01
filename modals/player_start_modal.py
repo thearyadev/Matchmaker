@@ -25,8 +25,8 @@ class OverwatchPlayerStartModal(nextcord.ui.Modal):
         self.add_item(self.rank_input)
 
     async def callback(self, interaction: nextcord.Interaction) -> None:
-        self.role = Role.fuzz_from_string(self.role_input.value)
-        self.rank = OverwatchRank.fuzz_from_string(self.rank_input.value)
+        self.role = Role.fuzz_from_str(self.role_input.value)
+        self.rank = OverwatchRank.fuzz_from_str(self.rank_input.value)
         self.stop()
 
 
@@ -44,5 +44,5 @@ class ValorantPlayerStartModal(nextcord.ui.Modal):
         self.add_item(self.rank_input)
 
     async def callback(self, interaction: nextcord.Interaction) -> None:
-        self.rank = ValorantRank.fuzz_from_string(self.rank_input.value)
+        self.rank = ValorantRank.fuzz_from_str(self.rank_input.value)
         self.stop()

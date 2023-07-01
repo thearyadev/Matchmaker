@@ -25,5 +25,5 @@ class CreateLobbyModal(nextcord.ui.Modal):
 
     async def callback(self, interaction: nextcord.Interaction) -> None:
         self.lobby_name = self.lobby_name_input.value
-        self.game = Game.fuzz_from_string(self.game_input.value)
+        self.game = Game.fuzz_from_str(self.game_input.value)
         self.stop()

@@ -8,7 +8,8 @@ T = TypeVar("T", bound="Rank")
 
 
 class Rank(AliasEnum):
-    ...
+    def __str__(self) -> str:
+        return f"Rank.{self.__class__.__name__}.{self.name}"
 
 
 class OverwatchRank(Rank):

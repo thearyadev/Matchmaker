@@ -12,15 +12,15 @@ from util.models.game import Game
 
 
 def test_fuzz_from_string():
-    assert Game.fuzz_from_string("OVERWATCH") == Game.OVERWATCH
-    assert Game.fuzz_from_string("OVER") == Game.OVERWATCH
-    assert Game.fuzz_from_string("OVERW") == Game.OVERWATCH
-    assert Game.fuzz_from_string("OVERWA") == Game.OVERWATCH
-    assert Game.fuzz_from_string("OW") == Game.OVERWATCH
-    assert Game.fuzz_from_string("VALORANT") == Game.VALORANT
-    assert Game.fuzz_from_string("VAL") == Game.VALORANT
-    assert Game.fuzz_from_string("VALOR") == Game.VALORANT
-    assert Game.fuzz_from_string("VALORRANT") == Game.VALORANT
-    assert Game.fuzz_from_string("VALORR") == Game.VALORANT
-    assert Game.fuzz_from_string("VALORRAN") == Game.VALORANT
-    assert Game.fuzz_from_string("VALORRANT") == Game.VALORANT
+    assert Game.fuzz_from_str("OVERWATCH") == Game.OVERWATCH
+    assert Game.fuzz_from_str("OVER") == Game.OVERWATCH
+    assert Game.fuzz_from_str("OVERW") == Game.OVERWATCH
+    assert Game.fuzz_from_str("OVERWA") == Game.OVERWATCH
+    assert Game.fuzz_from_str("OW") == Game.OVERWATCH
+    assert Game.fuzz_from_str("VALORANT") == Game.VALORANT
+    assert Game.fuzz_from_str("VAL") == Game.VALORANT
+    assert Game.fuzz_from_str("VALOR") == Game.VALORANT
+    assert Game.fuzz_from_str("VALORRANT") == Game.VALORANT
+    assert Game.fuzz_from_str("VALORR") == Game.VALORANT
+    assert Game.fuzz_from_str("VALORRAN") == Game.VALORANT
+    assert Game.fuzz_from_str("VALORRANT") == Game.VALORANT

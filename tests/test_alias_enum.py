@@ -30,13 +30,13 @@ def test_fuzz_from_string():
         ONE = 1, ("one", "1")
         TWO = 2, ("two", "2")
 
-    assert TestEnum.fuzz_from_string("one") == TestEnum.ONE
-    assert TestEnum.fuzz_from_string("1") == TestEnum.ONE
-    assert TestEnum.fuzz_from_string("two") == TestEnum.TWO
-    assert TestEnum.fuzz_from_string("2") == TestEnum.TWO
+    assert TestEnum.fuzz_from_str("one") == TestEnum.ONE
+    assert TestEnum.fuzz_from_str("1") == TestEnum.ONE
+    assert TestEnum.fuzz_from_str("two") == TestEnum.TWO
+    assert TestEnum.fuzz_from_str("2") == TestEnum.TWO
 
-    assert TestEnum.fuzz_from_string("on") == TestEnum.ONE
-    assert TestEnum.fuzz_from_string("o") == TestEnum.ONE
-    assert TestEnum.fuzz_from_string("t") == TestEnum.TWO
-    assert TestEnum.fuzz_from_string("tw") == TestEnum.TWO
-    assert TestEnum.fuzz_from_string("")
+    assert TestEnum.fuzz_from_str("on") == TestEnum.ONE
+    assert TestEnum.fuzz_from_str("o") == TestEnum.ONE
+    assert TestEnum.fuzz_from_str("t") == TestEnum.TWO
+    assert TestEnum.fuzz_from_str("tw") == TestEnum.TWO
+    assert TestEnum.fuzz_from_str("")

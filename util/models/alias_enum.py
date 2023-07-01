@@ -20,15 +20,19 @@ class AliasEnum(Enum):
 
     @classmethod
     @cache
-    def fuzz_from_string(cls: Type[T], string: str) -> Type[T]:
-        results: list[tuple[Type[T], int]] = list()
-        for member in list(cls):
-            for member_aliases in (member.name, *member.aliases):
-                if (
-                    score := fuzz.ratio(
-                        standardize(member_aliases), standardize(string)
-                    )
-                ) >= 95:
-                    return member
-                results.append((member, score))
-        return max(results, key=lambda value_pair: value_pair[-1])[0]
+    def fuzz_from_str(cls: Type[T], string: str) -> Type[T]:
+        """Return the member of the enum that is most similar to the given string."""
+        standardized_string: str = standardize(string)
+        results: list[tuple[Type[T], int]] = (
+            # iterate through all members of the enum
+            # and fuzzy compare the string to the member and its aliases
+            (member, fuzz.ratio(member_alias, standardized_string))
+            for member in cls  # members
+            for member_alias in {
+                standardize(member.name),
+                *member.aliases,
+            }  # members and aliases
+        )
+        return max(results, key=lambda value_pair: value_pair[-1])[
+            0
+        ]  # most similar member
