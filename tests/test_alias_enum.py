@@ -9,7 +9,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 
 
-from util.models.alias_enum import AliasEnum
+from util.helpers.alias_enum import AliasEnum
 
 
 def test_alias_enum_init():
