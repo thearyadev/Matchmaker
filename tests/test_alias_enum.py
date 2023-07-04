@@ -21,8 +21,8 @@ def test_alias_enum_init():
     assert TestEnum.TWO.value == 2
     assert TestEnum.ONE.name == "ONE"
     assert TestEnum.TWO.name == "TWO"
-    assert TestEnum.ONE.aliases == ("one", "1")
-    assert TestEnum.TWO.aliases == ("two", "2")
+    assert TestEnum.ONE.aliases == ("ONE", "one", "1")
+    assert TestEnum.TWO.aliases == ("TWO", "two", "2")
 
 
 def test_fuzz_from_string():
