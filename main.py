@@ -11,6 +11,7 @@ from modals.player_start_modal import OverwatchPlayerStartModal
 from util.models.lobby import Lobby
 from util.models.team import OverwatchTeam, ValorantTeam
 from views.join_lobby_view import JoinLobbyView
+from views.teams_lobby_options_view import TeamsLobbyOptionsView
 from util.models.game import Game
 
 load_dotenv()
@@ -84,7 +85,6 @@ class Matchmaker(commands.Cog):
 
         self.lobbies.add(lobby)
 
-
         lobby.join_message = await lobby.join_text.send(
             view=JoinLobbyView(lobby=lobby),
             embed=nextcord.Embed(
@@ -96,6 +96,15 @@ class Matchmaker(commands.Cog):
             .add_field(name="Owner", value=lobby.owner.mention)
             .add_field(name="Lobby ID", value=lobby.id.hex[:4])
             .add_field(name="Number of Players", value=len(lobby.players)),
+        )
+
+        lobby.rosters_message = await lobby.match_text.send(
+            view=TeamsLobbyOptionsView(lobby=lobby),
+            embed=nextcord.Embed(
+                title="Welcome to the match!",
+                description="The games haven't started yet, the lobby owner will start when everyone is ready.",
+                color=nextcord.Color.green(),
+            ),
         )
 
 

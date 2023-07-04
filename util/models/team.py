@@ -71,6 +71,12 @@ class Team(ABC):
         """Returns a copy of the team with the same players."""
         pass
 
+    def get_player_name_array_by_role(self) -> list[str]:
+        result: list[str] = list()
+        player: Player
+        for player in sorted(self, key=lambda player: player.role):
+            result.append(player.user.name)
+        return result
 
 @dataclass(slots=True)
 class OverwatchTeam(Team):
@@ -156,7 +162,6 @@ class OverwatchTeam(Team):
         for player in self:
             team.add(player)
         return team
-
 
 @dataclass(slots=True)
 class ValorantTeam(Team):

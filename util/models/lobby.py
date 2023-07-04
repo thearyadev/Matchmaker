@@ -5,7 +5,7 @@ import nextcord
 
 from util.models.game import Game
 from util.models.player import Player
-from util.models.team import Team
+from util.models.team import Team, balance_teams
 
 
 @dataclass(slots=True)
@@ -35,6 +35,7 @@ class Lobby:
     tools_text: nextcord.TextChannel = None
 
     join_message: nextcord.Message = None
+    rosters_message: nextcord.Message = None
 
     def __hash__(self):
         return hash(self.id)
@@ -83,3 +84,36 @@ class Lobby:
             .add_field(name="Lobby ID", value=self.id.hex[:4])
             .add_field(name="Number of Players", value=len(self.players))
         )
+
+    @staticmethod
+    def sort_players(players: set[Player]) -> list:
+        return sorted(players, key=lambda player: player.total_games, reverse=True)
+
+    def flood(self):
+        sorted_players: list[Player] = self.sort_players(
+            self.players
+        )  # sort players by total games played
+
+        for player in sorted_players:  # add players to team one
+            self.team_one.add(player)
+            self.players.remove(player)  # remove player from lobby
+
+        sorted_players: list[Player] = self.sort_players(self.players)
+
+        for player in sorted_players:
+            self.team_two.add(player)  #
+            self.players.remove(player)  # remove player from lobby
+
+        # remaining players were not selected, and are likely prime candiates for next round.
+
+    def balance(self):
+        balance_teams(self.team_one, self.team_two)
+
+    def return_(self, player: Player):
+        for player in self.team_one:
+            self.players.add(player)
+            self.team_one.remove(player)
+
+        for player in self.team_two:
+            self.players.add(player)
+            self.team_two.remove(player)
