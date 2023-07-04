@@ -1,6 +1,6 @@
 import copy
 import random
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod, abstractproperty
 from dataclasses import dataclass, field
 from typing import Iterator, Self, Type, TypeVar
 
@@ -17,6 +17,10 @@ T = TypeVar("T")
 
 @dataclass
 class Team(ABC):
+    @abstractproperty
+    def name(self) -> str:
+        pass
+
     @abstractmethod
     def __contains__(self, player: Player) -> bool:
         pass
@@ -82,6 +86,10 @@ class OverwatchTeam(Team):
         default_factory=lambda: BoundedPlayerSet(size=2)
     )
     cloned: bool = field(default=False)
+
+    @property
+    def name(self) -> str:
+        return self.name
 
     def __contains__(self, player: Player) -> bool:
         return player in self.tank or player in self.damage or player in self.support
@@ -158,6 +166,10 @@ class ValorantTeam(Team):
     )
     cloned: bool = field(default=False)
 
+    @property
+    def name(self) -> str:
+        return self.name
+
     def __contains__(self, player: Player) -> bool:
         return player in self.players
 
@@ -219,7 +231,9 @@ def shuffle(team1: Team, team2: Team):
     player1: Player = random.choice(team1)
     team1.remove(player1)
     for p in team2:
-        if p.role == player1.role: # no special case needs to be made. Valorant roles should be set to NONE.
+        if (
+            p.role == player1.role
+        ):  # no special case needs to be made. Valorant roles should be set to NONE.
             # in the future if we want to add more games, we can add a special case for each game.
             team2.remove(p)
             team2.add(player1)
