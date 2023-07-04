@@ -9,8 +9,9 @@ from rich import print
 from modals.create_lobby_modal import CreateLobbyModal
 from modals.player_start_modal import OverwatchPlayerStartModal
 from util.models.lobby import Lobby
-from util.models.team import OverwatchTeam
+from util.models.team import OverwatchTeam, ValorantTeam
 from views.join_lobby_view import JoinLobbyView
+from util.models.game import Game
 
 load_dotenv()
 TESTING_GUILD_ID = 1042253802507616337  # Replace with your guild ID
@@ -52,7 +53,8 @@ class Matchmaker(commands.Cog):
         createLobbyModal = CreateLobbyModal()
         await interaction.response.send_modal(createLobbyModal)
         await createLobbyModal.wait()
-        if createLobbyModal.game is not None:
+
+        if createLobbyModal.game == Game.OVERWATCH:
             lobby: Lobby = Lobby(
                 id=uuid4(),
                 players=set(),
@@ -63,21 +65,38 @@ class Matchmaker(commands.Cog):
                 team_one=OverwatchTeam(name="Team 1"),
                 team_two=OverwatchTeam(name="Team 2"),
             )
-            await lobby.create_channels()
-
-            self.lobbies.add(lobby)
-            lobby.join_message = await lobby.join_text.send(
-                view=JoinLobbyView(lobby=lobby),
-                embed=nextcord.Embed(
-                    title="Welcome to the lobby!",
-                    description="Click the 'Join' button to join the lobby!",
-                    color=nextcord.Color.green(),
-                )
-                .add_field(name="Game", value=lobby.game.name)
-                .add_field(name="Owner", value=lobby.owner.mention)
-                .add_field(name="Lobby ID", value=lobby.id.hex[:4])
-                .add_field(name="Number of Players", value=len(lobby.players)),
+        elif createLobbyModal.game == Game.VALORANT:
+            lobby: Lobby = Lobby(
+                id=uuid4(),
+                players=set(),
+                name=createLobbyModal.lobby_name,
+                guild=interaction.guild,
+                game=createLobbyModal.game,
+                owner=interaction.user,
+                team_one=ValorantTeam(name="Team 1"),
+                team_two=ValorantTeam(name="Team 2"),
             )
+
+        else:
+            return
+
+        await lobby.create_channels()
+
+        self.lobbies.add(lobby)
+
+
+        lobby.join_message = await lobby.join_text.send(
+            view=JoinLobbyView(lobby=lobby),
+            embed=nextcord.Embed(
+                title="Welcome to the lobby!",
+                description="Click the 'Join' button to join the lobby!",
+                color=nextcord.Color.green(),
+            )
+            .add_field(name="Game", value=lobby.game.name)
+            .add_field(name="Owner", value=lobby.owner.mention)
+            .add_field(name="Lobby ID", value=lobby.id.hex[:4])
+            .add_field(name="Number of Players", value=len(lobby.players)),
+        )
 
 
 bot.add_cog(Matchmaker(bot))
