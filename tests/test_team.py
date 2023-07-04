@@ -223,7 +223,7 @@ def test_overwatch_shuffle():
     shuffle(team1, team2)
     new_rank_delta = mean_delta(team1, team2)
     assert len(team1) == len(team2)
-    assert old_rank_delta != new_rank_delta # THIS IS RANDOM, SO IT CAN FAIL. 
+    assert old_rank_delta != new_rank_delta  # THIS IS RANDOM, SO IT CAN FAIL.
     # RE-RUN THE TEST IF IT FAILS
 
 

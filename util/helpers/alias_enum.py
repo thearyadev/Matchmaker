@@ -8,6 +8,7 @@ from util.standardize import standardize
 
 T = TypeVar("T", bound="AliasEnum")
 
+
 class AliasEnum(Enum):
     __slots__ = ()
     _aliases: Optional[tuple[str]]
