@@ -1,6 +1,6 @@
 from enum import Enum
 from functools import cache
-from typing import Optional, Type, TypeVar
+from typing import Any, Optional, Type, TypeVar
 
 from fuzzywuzzy import fuzz
 
@@ -8,8 +8,8 @@ from util.standardize import standardize
 
 T = TypeVar("T", bound="AliasEnum")
 
-
 class AliasEnum(Enum):
+    __slots__ = ()
     _aliases: Optional[tuple[str]]
 
     def __new__(cls: Type[T], value: int, aliases: Optional[tuple[str]] = None):
