@@ -5,7 +5,7 @@ import nextcord
 
 from util.models.game import Game
 from util.models.player import Player
-from util.models.team import OverwatchTeam
+from util.models.team import Team
 
 
 @dataclass(slots=True)
@@ -17,8 +17,8 @@ class Lobby:
 
     players: set[Player]
 
-    team_one: OverwatchTeam
-    team_two: OverwatchTeam
+    team_one: Team
+    team_two: Team
 
     guild: nextcord.Guild
     game: Game
