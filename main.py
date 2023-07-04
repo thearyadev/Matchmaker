@@ -9,7 +9,7 @@ from rich import print
 from modals.create_lobby_modal import CreateLobbyModal
 from modals.player_start_modal import OverwatchPlayerStartModal
 from util.models.lobby import Lobby
-from util.models.team import Team
+from util.models.team import OverwatchTeam
 from views.join_lobby_view import JoinLobbyView
 
 load_dotenv()
@@ -60,8 +60,8 @@ class Matchmaker(commands.Cog):
                 guild=interaction.guild,
                 game=createLobbyModal.game,
                 owner=interaction.user,
-                team_one=Team(name="Team 1"),
-                team_two=Team(name="Team 2"),
+                team_one=OverwatchTeam(name="Team 1"),
+                team_two=OverwatchTeam(name="Team 2"),
             )
             await lobby.create_channels()
 
