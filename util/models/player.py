@@ -7,7 +7,7 @@ from util.models.rank import OverwatchRank
 from util.models.role import Role
 
 
-@dataclass
+@dataclass(slots=True)
 class Player:
     user: nextcord.User
     role: Optional[Role]
