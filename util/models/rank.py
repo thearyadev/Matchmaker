@@ -2,7 +2,7 @@ from typing import Optional, Type, TypeVar
 
 from fuzzywuzzy import fuzz
 
-from util.models.alias_enum import AliasEnum
+from util.helpers.alias_enum import AliasEnum
 
 T = TypeVar("T", bound="Rank")
 
@@ -13,7 +13,7 @@ class Rank(AliasEnum):
 
 
 class OverwatchRank(Rank):
-    UNRANKED = 0, None
+    UNRANKED = 0, ("none", "idk", "lol", "unrated")
     BRONZE_5 = 1, ("b5", "bronze five")
     BRONZE_4 = 2, ("b4", "bronze four")
     BRONZE_3 = 3, ("b3", "bronze three")
@@ -53,7 +53,7 @@ class OverwatchRank(Rank):
 
 
 class ValorantRank(Rank):
-    UNRANKED = 0, None
+    UNRANKED = 0, ("none", "idk", "lol", "unrated")
     IRON_1 = 1, ("i1", "iron one")
     IRON_2 = 2, ("i2", "iron two")
     IRON_3 = 3, ("i3", "iron three")

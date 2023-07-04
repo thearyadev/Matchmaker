@@ -1,6 +1,6 @@
 from enum import Enum
 
-from util.models.alias_enum import AliasEnum
+from util.helpers.alias_enum import AliasEnum
 
 
 class Game(AliasEnum):

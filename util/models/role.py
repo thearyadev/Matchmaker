@@ -2,7 +2,7 @@ from typing import Optional, Type, TypeVar
 
 from fuzzywuzzy import fuzz
 
-from util.models.alias_enum import AliasEnum
+from util.helpers.alias_enum import AliasEnum
 
 T = TypeVar("T", bound="Role")
 
